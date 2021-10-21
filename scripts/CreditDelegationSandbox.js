@@ -83,8 +83,12 @@ async function main() {
 
   delegatorDebtBal = await wethDebt.balanceOf(delegator.address);
   borrowerDebtBal = await wethDebt.balanceOf(borrower.address);
+  delegatorDebtScaledBal = await wethDebt.scaledBalanceOf(delegator.address);
+  borrowerDebtScaledBal = await wethDebt.scaledBalanceOf(borrower.address);
   console.log("Delegator debt balance is : %d WETH", ethers.utils.formatEther(delegatorDebtBal.toString()));
   console.log("Borrower debt balance is : %d WETH", ethers.utils.formatEther(borrowerDebtBal.toString()));
+  console.log("Delegator debt scaled balance is : %d WETH", ethers.utils.formatEther(delegatorDebtScaledBal.toString()));
+  console.log("Borrower debt scaled balance is : %d WETH", ethers.utils.formatEther(borrowerDebtScaledBal.toString()));
   console.log("--------------------------------------------------------------------------------");
 
   await network.provider.send("evm_mine");
@@ -94,8 +98,12 @@ async function main() {
   console.log("Borrower can borrow up to %d WETH", ethers.utils.formatEther(borrowAllowance.toString()));
   delegatorDebtBal = await wethDebt.balanceOf(delegator.address);
   borrowerDebtBal = await wethDebt.balanceOf(borrower.address);
+  delegatorDebtScaledBal = await wethDebt.scaledBalanceOf(delegator.address);
+  borrowerDebtScaledBal = await wethDebt.scaledBalanceOf(borrower.address);
   console.log("Delegator debt balance is : %d WETH", ethers.utils.formatEther(delegatorDebtBal.toString()));
   console.log("Borrower debt balance is : %d WETH", ethers.utils.formatEther(borrowerDebtBal.toString()));
+  console.log("Delegator debt scaled balance is : %d WETH", ethers.utils.formatEther(delegatorDebtScaledBal.toString()));
+  console.log("Borrower debt scaled balance is : %d WETH", ethers.utils.formatEther(borrowerDebtScaledBal.toString()));
   console.log("--------------------------------------------------------------------------------");
   
 }
