@@ -13,6 +13,15 @@ contract AaveCreditDelegation {
     using SafeERC20 for IERC20;
     using SafeMath for uint256;
 
+    // DAI Address (on Polygon)
+    address private constant DAI = 0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063;
+
+    // USDC Address (on Polygon)
+    address private constant USDC = 0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174;
+
+    // USDT Address (on Polygon)
+    address private constant USDT = 0xc2132D05D31c914a87C6611C10748AEb04B58e8F;
+
     // Interface to AAVE Data Provider contract
     IProtocolDataProvider private dataProvider;
     
@@ -29,6 +38,8 @@ contract AaveCreditDelegation {
     }
 
     function drawCredit(address _asset, uint256 _interestRateMode) external {
+        // Verifies that the asset requested for dekegation is supported by the contract
+        require(_isSupportedAsset(_asset), "Asset not supported");
         // Check correctness of interest rate mode parameter
         require(_interestRateMode == 1 || _interestRateMode == 2, "Incorrect Interest Rate Mode");
 
@@ -51,6 +62,8 @@ contract AaveCreditDelegation {
     }
 
     function requestDebtRepayment(address _asset, uint256 _interestRateMode) external {
+        // Verifies that the asset requested for repayment is supported by the contract
+        require(_isSupportedAsset(_asset), "Asset not supported");
         // Check correctness of interest rate mode parameter
         require(_interestRateMode == 1 || _interestRateMode == 2, "Incorrect Interest Rate Mode");
 
@@ -61,5 +74,11 @@ contract AaveCreditDelegation {
         // Repay the amount of asset on behalf of msg.sender
         lendingPool.repay(_asset, amount, _interestRateMode, msg.sender);
 
+    }
+
+    function _isSupportedAsset(address _asset) internal pure returns (bool){
+        if(_asset == DAI || _asset == USDC || _asset == USDT) {
+            return true;
+        } else return false;
     }
 }
